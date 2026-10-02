@@ -1,0 +1,21 @@
+# Configuração local e segredos
+/config.php
+.env
+.env.*
+!.env.example
+
+# Bancos, backups e logs
+*.sql
+*.sql.gz
+*.sqlite
+*.sqlite3
+*.zip
+*.log
+/backups/
+/sessions/
+
+# Arquivos locais do editor e do sistema
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

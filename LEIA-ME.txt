@@ -1,0 +1,81 @@
+AGENDA — DR. ALBERTO NAVARRO
+Versão inicial para testes locais com um profissional / uma agenda.
+
+INSTALAÇÃO NO XAMPP
+1. Copie a pasta agendamento para C:\xampp\htdocs\agendamento.
+   O arquivo index.php deve ficar diretamente dentro dessa pasta.
+2. Abra o XAMPP Control Panel e clique em Start para Apache e MySQL.
+3. Abra http://localhost/agendamento/install.php no navegador.
+4. Informe seu e-mail e crie uma senha de pelo menos 10 caracteres.
+5. Clique em Instalar e criar acesso. O banco é criado automaticamente.
+6. Entre na Área administrativa com o e-mail e a senha escolhidos.
+
+ENDEREÇOS
+Paciente: http://localhost/agendamento/
+Administrador: http://localhost/agendamento/index.php?page=admin
+
+FUNCIONALIDADES
+- Reserva de horários com nome e telefone.
+- Agenda diária com confirmação, cancelamento, conclusão e falta.
+- Link privado para o paciente consultar, cancelar e reagendar.
+- Lista de pacientes derivada das reservas, com pesquisa.
+- Cadastro e ativação/desativação de serviços, com duração própria.
+- Dias de atendimento, abertura, fechamento e intervalo configuráveis.
+- Bloqueios para almoço, férias ou outras pausas.
+- Troca de senha do administrador.
+- Proteção contra sobreposição, inclusive no processamento de reservas.
+
+REGRAS DESTA VERSÃO
+Os horários começam em intervalos de 30 minutos a partir da abertura.
+A duração do serviço e o intervalo devem caber na disponibilidade.
+As reservas podem ser feitas até 90 dias à frente.
+Uma solicitação já ocupa o horário enquanto aguarda confirmação.
+Reagendamento volta ao status aguardando confirmação.
+O paciente pode cancelar/reagendar até o início do atendimento.
+Atendimentos encerrados não são reativados: crie uma nova reserva.
+Mudanças de disponibilidade não alteram reservas existentes.
+Serviços desativados não aparecem para novas reservas.
+Os dados de paciente são coletados no agendamento; não há prontuário.
+Para alterar nome/telefone incorretos, cancele e crie nova reserva.
+
+TESTE SUGERIDO
+1. Cadastre uma reserva com nome e telefone fictícios em um dia útil futuro.
+2. Guarde o link privado da reserva e confirme o atendimento no painel.
+3. Tente reservar o mesmo horário: ele não deve estar disponível.
+4. Use o link privado para reagendar e cancelar.
+5. Crie um bloqueio e confira que seus horários somem da página pública.
+6. Ajuste os dias/horários e cadastre um novo serviço.
+
+CONFIGURAÇÃO TÉCNICA
+PHP 8.1 ou superior; extensões pdo_mysql e mbstring; MySQL/MariaDB.
+Testado com PHP 8.2.12 e MariaDB 10.4.32 do XAMPP.
+Não exige Composer, Node, bibliotecas externas ou internet para funcionar.
+Conexão configurada em config.php:
+host 127.0.0.1, porta 3306, banco navarro_agenda, usuário root, senha vazia.
+Esses são os padrões locais do XAMPP. Ajuste se os seus forem diferentes.
+Se Apache usa outra porta, inclua-a na URL (ex.: localhost:8080).
+Se o banco não conectar, confira o MySQL iniciado e config.php.
+Guarde o acesso administrativo escolhido; recuperação por e-mail não está integrada.
+
+LIMITES DA PRIMEIRA VERSÃO
+Não inclui envio por WhatsApp/e-mail, pagamento, múltiplos profissionais,
+prontuário, séries recorrentes automáticas ou sincronização de calendários.
+Sessões semanais podem ser cadastradas individualmente.
+Não importa agendamentos existentes no WhatsApp automaticamente.
+Design proposto em azul e branco, ainda sem adaptação ao site original.
+
+MIGRAÇÃO FUTURA
+Antes do uso real, configurar HTTPS, credenciais de banco próprias,
+backups e proteção contra abuso de reservas públicas; revisar privacidade,
+regras da clínica e política de retenção. Esta entrega é para teste local.
+Exportar navarro_agenda pelo phpMyAdmin e importar no banco da hospedagem.
+Copiar o código e atualizar config.php com as credenciais da hospedagem.
+Se o provedor não permitir CREATE DATABASE, crie o banco pelo painel primeiro.
+O instalador detecta um administrador existente e se bloqueia automaticamente.
+Links privados salvos em localhost precisarão usar o domínio novo após migração.
+Não exponha o XAMPP diretamente à internet para uso de pacientes.
+
+BACKUP LOCAL
+No phpMyAdmin (http://localhost/phpmyadmin), selecione navarro_agenda,
+use Exportar e salve o SQL junto com uma cópia da pasta agendamento.
+Para restaurar, importe o SQL em um banco vazio e ajuste config.php.
